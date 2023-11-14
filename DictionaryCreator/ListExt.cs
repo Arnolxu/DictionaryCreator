@@ -23,5 +23,18 @@ namespace DictionaryCreator
             }
             return result;
         }
+        public static List<WordDefinition> RemoveAllWords<T>(this List<WordDefinition> source, WordDefinition oldValue)
+        {
+            if (source == null)
+                throw new ArgumentNullException(nameof(source));
+
+            List<WordDefinition> result = new List<WordDefinition>();
+            foreach (WordDefinition item in source)
+            {
+                if (!item.WordEquals(oldValue))
+                    result.Add(item);
+            }
+            return result;
+        }
     }
 }

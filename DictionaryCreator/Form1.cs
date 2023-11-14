@@ -176,7 +176,7 @@ namespace DictionaryCreator
             selected.IPA = dataGridView1.SelectedRows[0].Cells[2].Value.ToString();
             selected.Example = dataGridView1.SelectedRows[0].Cells[3].Value.ToString();
 
-            words.RemoveAll(r => r.Equals(selected));
+            words = words.RemoveAllWords<WordDefinition>(selected);
             dataGridView1.Rows.RemoveAt(dataGridView1.SelectedRows[0].Index);
             UpdateButtonAvailability();
         }
