@@ -214,7 +214,7 @@ namespace DictionaryCreator
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
-            if (keyData == (Keys.Control | Keys.S))
+            if (keyData == (Keys.Control | Keys.S) && !textBox1.Focused)
             {
                 if (filepath != null)
                 {
@@ -234,7 +234,7 @@ namespace DictionaryCreator
                 }
                 return true;
             }
-            else if (keyData == (Keys.Control | Keys.Shift | Keys.S))
+            else if (keyData == (Keys.Control | Keys.Shift | Keys.S) && !textBox1.Focused)
             {
                 SaveFileDialog savefile = new SaveFileDialog();
                 savefile.FileName = filepath != null ? Path.GetFileName(filepath) : "untitled_dictionary.csv";
@@ -245,11 +245,11 @@ namespace DictionaryCreator
                     MessageBox.Show("Saved your dictionary to " + savefile.FileName, "Saved dictionary");
                 }
             }
-            else if (keyData == (Keys.Control | Keys.O))
+            else if (keyData == (Keys.Control | Keys.O) && !textBox1.Focused)
             {
                 OpenFile();
             }
-            else if (keyData == (Keys.Control | Keys.E))
+            else if (keyData == (Keys.Control | Keys.E) && !textBox1.Focused)
             {
                 EditWord editword = new EditWord();
                 editword.form1 = this;
@@ -260,13 +260,21 @@ namespace DictionaryCreator
                 editword.selected = dataGridView1.SelectedRows[0].Index;
                 editword.Show();
             }
-            else if (keyData == (Keys.Control | Keys.A))
+            else if (keyData == (Keys.Control | Keys.A) && !textBox1.Focused)
             {
                 AddWord addword = new AddWord();
                 addword.form1 = this;
                 addword.Show();
             }
             return base.ProcessCmdKey(ref msg, keyData);
+        }
+
+        private void dataGridView1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == (Keys.Control | Keys.A))
+            {
+                e.Handled = true;
+            }
         }
     }
 }
