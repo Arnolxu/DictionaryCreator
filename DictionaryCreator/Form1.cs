@@ -78,6 +78,10 @@ namespace DictionaryCreator
                 LoadDictionary();
                 Activate();
             }
+            else
+            {
+                words = new List<WordDefinition> { };
+            }
 
             Text = filepath != null ? Path.GetFileName(filepath) + " - Dictionary Creator" : "Untitled - Dictionary Creator";
         }
@@ -135,12 +139,14 @@ namespace DictionaryCreator
         {
             words.Add(word);
             dataGridView1.Rows.Add(new string[] { word.Word, word.Description, word.IPA, word.Example });
+            UpdateButtonAvailability();
         }
 
         public void editWords(WordDefinition oldword, WordDefinition word, int selected)
         {
             words = words.ReplaceAllWords<WordDefinition>(oldword, word);
             dataGridView1.Rows[selected].SetValues(new string[] { word.Word, word.Description, word.IPA, word.Example });
+            UpdateButtonAvailability();
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -172,6 +178,7 @@ namespace DictionaryCreator
 
             words.RemoveAll(r => r.Equals(selected));
             dataGridView1.Rows.RemoveAt(dataGridView1.SelectedRows[0].Index);
+            UpdateButtonAvailability();
         }
 
         private void OpenFile()
